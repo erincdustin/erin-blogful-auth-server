@@ -149,7 +149,7 @@ function makeExpectedArticle(users, article, comments=[]) {
       nickname: author.nickname,
       date_created: author.date_created.toISOString(),
       date_modified: author.date_modified || null,
-    },
+    }, 
   }
 }
 
@@ -262,6 +262,11 @@ function seedMaliciousArticle(db, user, article) {
     )
 }
 
+function makeAuthHeader(user) {
+  const token = Buffer.from(`${user.user_name}:${user.password}`).toString('base64')
+  return `Basic ${token}`
+}
+
 module.exports = {
   makeUsersArray,
   makeArticlesArray,
@@ -274,4 +279,5 @@ module.exports = {
   cleanTables,
   seedArticlesTables,
   seedMaliciousArticle,
+  makeAuthHeader,
 }
